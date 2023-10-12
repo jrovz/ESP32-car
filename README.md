@@ -1,35 +1,41 @@
-| Supported Targets | ESP32 | ESP32-C2 | ESP32-C3 | ESP32-C6 | ESP32-H2 | ESP32-S2 | ESP32-S3 |
-| ----------------- | ----- | -------- | -------- | -------- | -------- | -------- | -------- |
+# Control de Motores DC con Sensor Ultrasónico HC-SR04 y ESP32
 
-# _Sample project_
+Este proyecto demuestra cómo controlar dos motores DC usando un ESP32 y un sensor ultrasónico HC-SR04 para ajustar la velocidad de los motores en función de la distancia medida. El código está escrito en C y utiliza el entorno de desarrollo ESP-IDF.
 
-(See the README.md file in the upper level 'examples' directory for more information about examples.)
+## Requisitos de Hardware
 
-This is the simplest buildable example. The example is used by command `idf.py create-project`
-that copies the project to user specified path and set it's name. For more information follow the [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project)
+- ESP32 (u otro dispositivo compatible con ESP-IDF)
+- Sensor ultrasónico HC-SR04
+- Dos motores DC
+- Puente H L293D
+- Cables de conexión
 
+## Configuración de Pines
 
+- Trigger del sensor ultrasónico: GPIO 5
+- Echo del sensor ultrasónico: GPIO 18
+- Pines de control de los motores DC (L293D):
+  - M1O1: GPIO 12
+  - M1O2: GPIO 13
+  - M2O1: GPIO 34
+  - M2O2: GPIO 35
 
-## How to use example
-We encourage the users to use the example as a template for the new projects.
-A recommended way is to follow the instructions on a [docs page](https://docs.espressif.com/projects/esp-idf/en/latest/api-guides/build-system.html#start-a-new-project).
+## Funciones Principales
 
-## Example folder contents
+- `set_pwm_adelante()`: Configura los canales PWM para controlar la velocidad de los motores.
+- `set_pwm_duty()`: Establece el ciclo de trabajo (duty cycle) para los motores basado en las distancias medidas.
+- `init_motors()`: Inicializa los pines de control de los motores.
+- `set_direction()`: Actualiza la dirección de los motores en función de la distancia medida.
+- `ultrasonic_test()`: Mide la distancia con el sensor ultrasónico y actualiza el control de los motores.
 
-The project **sample_project** contains one source file in C language [main.c](main/main.c). The file is located in folder [main](main).
+## Uso
 
-ESP-IDF projects are built using CMake. The project build configuration is contained in `CMakeLists.txt`
-files that provide set of directives and instructions describing the project's source files and targets
-(executable, library, or both). 
+1. Conecta todos los componentes según las configuraciones de pines mencionadas.
+2. Carga el código en tu ESP32 utilizando el entorno de desarrollo ESP-IDF.
+3. El ESP32 medirá la distancia utilizando el sensor ultrasónico y ajustará la velocidad de los motores DC en función de la distancia.
 
-Below is short explanation of remaining files in the project folder.
+Asegúrate de modificar las configuraciones de los pines y otros parámetros según tu propia configuración hardware.
 
-```
-├── CMakeLists.txt
-├── main
-│   ├── CMakeLists.txt
-│   └── main.c
-└── README.md                  This is the file you are currently reading
-```
-Additionally, the sample project contains Makefile and component.mk files, used for the legacy Make based build system. 
-They are not used or needed when building with CMake and idf.py.
+## Contribuciones
+
+¡Las contribuciones son bienvenidas! Si encuentras mejoras o correcciones para este proyecto, no dudes en enviar un pull request.
